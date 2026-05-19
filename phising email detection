@@ -1,6 +1,5 @@
 # Phishing Email Detection Model
 
-# Import required libraries
 import pandas as pd
 import numpy as np
 
@@ -9,7 +8,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-# Sample Dataset
 data = {
     'email': [
         'Congratulations! You won a free iPhone click here',
@@ -30,18 +28,14 @@ data = {
     ]
 }
 
-# Create DataFrame
 df = pd.DataFrame(data)
 
-# Features and Labels
 X = df['email']
 y = df['label']
 
-# Convert text into numerical vectors
 vectorizer = CountVectorizer()
 X_vectorized = vectorizer.fit_transform(X)
 
-# Split dataset
 X_train, X_test, y_train, y_test = train_test_split(
     X_vectorized,
     y,
@@ -49,33 +43,30 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# Train Model
 model = MultinomialNB()
 model.fit(X_train, y_train)
 
-# Predictions
 y_pred = model.predict(X_test)
 
-# Accuracy
+
 accuracy = accuracy_score(y_test, y_pred)
 
 print("Accuracy:", accuracy)
 
-# Confusion Matrix
+
 print("\nConfusion Matrix:")
 print(confusion_matrix(y_test, y_pred))
 
-# Classification Report
+
 print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
 
-# Test with new email
+
 new_email = ["Click here to claim your free reward now"]
 
-# Transform input
 new_email_vector = vectorizer.transform(new_email)
 
-# Predict
+
 prediction = model.predict(new_email_vector)
 
 print("\nNew Email Prediction:", prediction[0])
